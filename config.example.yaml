@@ -1,0 +1,59 @@
+# Example configuration file for hostsearch
+# Copy this to config.yaml and update with your actual hosts
+
+hosts:
+  # Example: Unraid server
+  unraid: ssh://admin:password123@10.0.0.50:22
+  
+  # Example: QNAP NAS
+  qnapnas: ssh://user:mypassword@10.0.0.20
+  
+  # Example: Backup server with custom port
+  backup: ssh://backup:secretpass@192.168.1.100:2222
+  
+  # Example: Home server (port defaults to 22 if omitted)
+  homeserver: ssh://root:rootpass@192.168.1.50
+
+# Optional: Define folders to search (overrides --roots flag)
+# If not specified, defaults to: /home, /mnt, /media, /srv
+folders:
+  - /home
+  - /mnt
+  - /data
+  - /volume1
+
+# Optional: Directories to exclude from search (overrides --exclude-dirs flag)
+# If not specified, defaults to: /proc, /sys, /dev, /run, /tmp, /var/log, /var/tmp, /var/cache, /lost+found
+exclude_dirs:
+  - /proc
+  - /sys
+  - /dev
+  - /run
+  - /tmp
+  - /var/log
+  - /var/tmp
+  - /var/cache
+  - /lost+found
+  - /mnt/user/appdata  # Example: Exclude Docker appdata
+  - /.recycle          # Example: Exclude recycle bin
+  - /share/NFSv=4/Personal/minio
+
+# Optional: Maximum search depth (0 = unlimited, searches recursively)
+# Examples:
+#   0 or omit = search all subdirectories recursively (default)
+#   1 = search only in the specified folder (no subdirectories)
+#   2 = search folder and one level of subdirectories
+max_depth: 0
+
+# Usage examples:
+# Search specific hosts:
+#   ./hostsearch -c config.yaml -h unraid,qnapnas "*.mp3"
+#
+# Search all hosts:
+#   ./hostsearch -c config.yaml --all "*.log"
+#
+# With custom search roots:
+#   ./hostsearch -c config.yaml --all --roots="/data;/mnt" "*.txt"
+#
+# Quiet mode (just file paths):
+#   ./hostsearch -c config.yaml --all --quiet "*.conf"
