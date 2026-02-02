@@ -52,6 +52,9 @@ type SSHConfig struct {
 	port     string
 }
 
+// Version info - set via ldflags at build time
+var version = "dev"
+
 // sensible defaults
 var (
 	defaultRoots    = []string{"/home", "/mnt", "/media", "/srv"}
@@ -409,8 +412,14 @@ func main() {
 	outFile := flag.String("out", "", "Output file to write results (format: servername: /path/to/file)")
 
 	concurrency := flag.Int("concurrency", 0, "Parallelism (0 = number of hosts, fallback to CPUs)")
+	showVersion := flag.Bool("version", false, "Show version and exit")
 
 	flag.Parse()
+
+	if *showVersion {
+		fmt.Printf("remotesearch version %s\n", version)
+		os.Exit(0)
+	}
 
 	args := flag.Args()
 	if len(args) < 1 {

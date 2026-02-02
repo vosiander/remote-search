@@ -1,4 +1,4 @@
-module gitlab.veitosiander.de/sikindustries/remote-search
+module github.com/vosiander/remote-search
 
 go 1.25.3
 
